@@ -1,0 +1,84 @@
+# Cursor Ruller - School Management System
+
+## 1) Stack dan Versi Wajib (Latest)
+- Framework utama: Laravel latest stable (target: Laravel 13.x).
+- Jika environment server belum mendukung requirement Laravel 13 (mis. PHP 8.3+), fallback ke Laravel 12.x latest patch.
+- PHP: gunakan versi terbaru yang kompatibel dengan Laravel target.
+- Frontend: Tailwind CSS + Vite latest.
+- DB: MySQL/MariaDB latest stable.
+- Auth baseline: Laravel Breeze atau Fortify (pilih yang paling sederhana untuk kebutuhan fitur saat ini).
+
+## 2) Prinsip Arsitektur
+- Gunakan struktur Laravel standar (Controller, Model, FormRequest, Policy, Service).
+- Controller harus tipis: validasi + delegasi ke Service.
+- Semua logika bisnis kompleks harus berada di folder `app/Services`.
+- Gunakan Eloquent ORM; hindari raw SQL kecuali benar-benar diperlukan dan harus aman.
+- Gunakan type hint PHP lengkap (argumen dan return type) pada semua method baru.
+
+## 3) Konvensi Penamaan
+- Controller: PascalCase + suffix `Controller` (contoh: `AttendanceController`).
+- Model: PascalCase singular (contoh: `StudentViolation`).
+- Table: snake_case plural (contoh: `student_achievements`).
+- Service: PascalCase + suffix `Service` (contoh: `ExamSessionService`).
+- FormRequest: PascalCase + aksi (contoh: `StoreAttendanceRequest`).
+
+## 4) Keamanan dan Akses
+- Roles wajib: `super_admin`, `teacher`, `student`.
+- Implementasi akses menggunakan middleware + policy/gate sesuai konteks.
+- Semua input user wajib divalidasi dengan FormRequest.
+- Gunakan CSRF, mass-assignment protection, dan sanitasi output Blade.
+- Jangan simpan secret di source code; gunakan `.env`.
+
+## 5) UI/UX Tailwind
+- Gunakan Blade Components reusable: card, button, badge, modal, table.
+- Dashboard: grid responsive (`grid-cols-1`, `md:grid-cols-2`, `lg:grid-cols-4`).
+- Wajib pakai utility responsive (`sm:`, `md:`, `lg:`) untuk halaman baru.
+- Definisikan warna brand sekolah di `tailwind.config.js` pada `theme.extend.colors`.
+
+## 6) Aturan Fitur Domain
+- Attendance (Daftar Hadir): siapkan struktur extensible untuk location-based / face-based attendance.
+- CBT (Ujian): prioritaskan stabilitas sesi, anti refresh accidental, dan autosave jawaban.
+- Violations/Achievements: wajib point-based system dengan histori perubahan.
+- Rapor: siapkan export PDF (DomPDF/Snappy) dan layout yang konsisten.
+
+## 7) Database dan Migration
+- Sebelum membuat migration baru: cek model, relasi, dan migration yang sudah ada agar tidak duplikat tabel.
+- Semua foreign key harus eksplisit dan diberi index seperlunya.
+- Gunakan enum/cast untuk status/role jika memungkinkan.
+- Sertakan seeder minimal untuk role dan user demo.
+
+## 8) Deployment (aaPanel/Linux)
+- Gunakan helper path Laravel: `public_path()`, `storage_path()`, `base_path()`.
+- Pastikan folder writable: `storage` dan `bootstrap/cache`.
+- Gunakan script deploy otomatis (`deployment.sh`) berisi pull, install, migrate, optimize.
+- Jangan hardcode path Windows.
+
+## 9) Testing Minimum
+- Tambahkan Feature Test untuk auth, role access, dan endpoint kritikal.
+- Tambahkan Unit Test untuk Service yang berisi kalkulasi/logika bisnis.
+- Untuk fitur baru, minimal ada 1 test sukses + 1 test gagal (validation/authorization).
+
+## 10) Komentar & Bahasa
+- Untuk logika kompleks, tambahkan komentar singkat bilingual (Indonesia/English).
+- Hindari komentar yang menjelaskan hal sepele.
+
+## 11) Paket/Resource Terbaru yang Direkomendasikan
+- Laravel Docs (latest): https://laravel.com/docs
+- Laravel Release Notes: https://laravel.com/docs/releases
+- Laravel Breeze: https://laravel.com/docs/starter-kits#laravel-breeze
+- Laravel Fortify: https://laravel.com/docs/fortify
+- Laravel Authorization (Gates/Policies): https://laravel.com/docs/authorization
+- Laravel Validation: https://laravel.com/docs/validation
+- Laravel Eloquent: https://laravel.com/docs/eloquent
+- Laravel Queues (untuk proses berat): https://laravel.com/docs/queues
+- Laravel Broadcasting (jika butuh realtime): https://laravel.com/docs/broadcasting
+- Tailwind CSS Docs (latest): https://tailwindcss.com/docs
+- Vite Docs (latest): https://vitejs.dev/guide/
+- DomPDF wrapper untuk Laravel: https://github.com/barryvdh/laravel-dompdf
+- Spatie Laravel Permission (opsional advanced role/permission): https://spatie.be/docs/laravel-permission
+
+## 12) Checklist saat Cursor Generate Kode
+- Selalu generate dengan versi paket terbaru yang kompatibel.
+- Utamakan perubahan incremental, hindari rewrite besar tanpa diminta.
+- Jalankan lint/test setelah perubahan penting.
+- Pastikan route, middleware, policy, request validation, dan view sinkron.
