@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-100">
                 Dashboard Sistem Sekolah
             </h2>
             <x-ui.badge variant="info">Aktif</x-ui.badge>
@@ -17,9 +17,9 @@
                 <x-ui.card title="Jadwal CBT" value="3" description="Ujian berlangsung minggu ini" />
             </div>
 
-            <div class="mt-6 rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-200">
-                <h3 class="text-base font-semibold text-gray-800">Aksi Cepat</h3>
-                <p class="mt-1 text-sm text-gray-600">
+            <div class="mt-6 rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:ring-gray-700">
+                <h3 class="text-base font-semibold text-gray-800 dark:text-gray-100">Aksi Cepat</h3>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
                     Pilih menu utama untuk mengelola rapor, absensi, dan evaluasi siswa.
                 </p>
                 <div class="mt-4 flex flex-wrap gap-3">
